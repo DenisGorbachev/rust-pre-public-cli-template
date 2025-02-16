@@ -6,13 +6,11 @@
 
 [![Build](https://github.com/DenisGorbachev/rust-cli-app-template/actions/workflows/ci.yml/badge.svg)](https://github.com/DenisGorbachev/rust-cli-app-template)
 
-
 This is a template for a Rust CLI app.
 
 **IMPORTANT**:
 
 * Change the name of the package in `Cargo.toml`
-
 
 ## Installation
 
