@@ -1,4 +1,4 @@
-use crate::types::Outcome;
+use crate::Outcome;
 use clap::Parser;
 use std::io::Write;
 use Command::*;

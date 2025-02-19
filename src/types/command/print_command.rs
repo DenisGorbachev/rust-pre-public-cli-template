@@ -1,4 +1,4 @@
-use crate::types::Outcome;
+use crate::Outcome;
 use clap::{value_parser, Parser};
 use std::io::Write;
 use std::path::PathBuf;
