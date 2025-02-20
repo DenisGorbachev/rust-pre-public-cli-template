@@ -15,6 +15,7 @@ title = "Rust CLI app template"
 tagline = ""
 summary = ""
 announcement = ""
+readme = { generate = false }
 
 [dependencies]
 clap = { version = "4.5.11", features = ["derive"] }
