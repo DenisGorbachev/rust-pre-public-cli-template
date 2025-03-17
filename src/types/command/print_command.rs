@@ -1,6 +1,5 @@
 use crate::Outcome;
 use clap::{value_parser, Parser};
-use std::io::{Read, Write};
 use std::path::PathBuf;
 
 #[derive(Parser, Clone, Debug)]
@@ -10,7 +9,7 @@ pub struct PrintCommand {
 }
 
 impl PrintCommand {
-    pub async fn run(self, _stdin: &mut impl Read, _stdout: &mut impl Write, _stderr: &mut impl Write) -> Outcome {
+    pub async fn run(self) -> Outcome {
         // let Self {
         //     path,
         // } = self;
