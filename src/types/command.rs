@@ -1,19 +1,13 @@
 use crate::Outcome;
 use clap::Parser;
-use Command::*;
+use cli_util::command_enum;
 
-#[derive(Parser, Clone, Debug)]
-pub enum Command {
-    Print(PrintCommand),
-}
-
-impl Command {
-    pub async fn run(self) -> Outcome {
-        match self {
-            Print(command) => command.run().await,
-        }
+command_enum!(
+    #[derive(Parser, Clone, Debug)]
+    pub enum Command {
+        Print(PrintCommand),
     }
-}
+);
 
 mod print_command;
 
