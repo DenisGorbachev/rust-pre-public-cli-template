@@ -7,16 +7,7 @@
 * Read @CLAUDE.project.md
 * Don't create git commits
 * Use `fd` and `rg` instead of `find` and `grep`
-
-## Commands
-
-Use `mise run ...` commands instead of regular `cargo` commands:
-
-* Run tests: `mise run test` (use this instead of `cargo test`)
-* Run specific test: `mise run test <test_file_path>` (use this instead of `cargo test`)
-* Format code: `mise run fmt` (use this instead of `cargo fmt`)
-* Lint code: `mise run lint` (use this instead of `cargo clippy`)
-* Check types: `mise run check` (use this instead of `cargo check`)
+* Do not run `test`, `lint`, `clippy`, `fmt`, `check` commands (they will be run automatically after you finish your task)
 
 ## Error handling
 
@@ -104,6 +95,7 @@ Use `mise run ...` commands instead of regular `cargo` commands:
 ## Code style
 
 * The file names must match the names of the primary item in this file (for example: a file with `struct User` must be in `user.rs`)
+* Don't use `mod.rs`, use module files with submodules in the folder with the same name (for example: `user.rs` with submodules in `user` folder)
 * Put the trait implementations in the same file as the target struct (for example: put `impl TryFrom<...> for User` in the same file as `struct User`, which is `user.rs`)
 * Use destructuring assignment for tuple arguments, for example: `fn try_from((name, parent_key): (&str, GroupKey)) -> ...`
 * Add a local `use` statement for enums to minimize the code size. For example:
@@ -127,4 +119,38 @@ Use `mise run ...` commands instead of regular `cargo` commands:
             GroupsOp::DeleteOne(_) => {}
         }
     }
+    ```
+* Simplify the callsite code by accepting `impl Into`. For example:
+  * Good:
+    ```rust
+    pub fn foo(input: impl Into<String>) {
+        let input = input.into();
+        // do something
+    }
+    ```
+  * Bad:
+    ```rust
+    /// This is bad because the callsite may have to call .into() when passing the input argument
+    pub fn foo(input: String) {}
+    ```
+* Provide additional flexibility for callsite by accepting `&impl AsRef` or `&mut impl AsMut` (e.g. both `PathBuf` and `Config` may implement `AsRef<Path>`). For example:
+  * Good:
+    ```rust
+    pub fn bar(input: &mut impl AsMut<String>) {
+        let input = input.as_mut();
+        // do something
+    }
+    
+    pub fn baz(input: &impl AsRef<str>) {
+        let input = input.as_ref();
+        // do something
+    }
+    ```
+  * Bad:
+    ```rust
+    /// This is bad because the callsite may have to call .as_mut() when passing the input argument
+    pub fn bar(input: &mut String) {}
+    
+    /// This is bad because the callsite may have to call .as_ref() when passing the input argument
+    pub fn baz(input: &str) {}
     ```
