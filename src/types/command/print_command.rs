@@ -1,5 +1,5 @@
 use crate::Outcome;
-use clap::{value_parser, Parser};
+use clap::{Parser, value_parser};
 use std::path::PathBuf;
 
 #[derive(Parser, Clone, Debug)]
