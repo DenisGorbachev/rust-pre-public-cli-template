@@ -399,7 +399,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rust-cli-app-template"
+name = "rust-pre-public-cli-template"
 version = "0.1.0"
 dependencies = [
  "clap",
