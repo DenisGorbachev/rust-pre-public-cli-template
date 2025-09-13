@@ -1,5 +1,6 @@
-use crate::Outcome;
 use clap::{Parser, value_parser};
+use derive_more::Error;
+use fmt_derive::Display;
 use std::path::PathBuf;
 
 #[derive(Parser, Clone, Debug)]
@@ -9,7 +10,7 @@ pub struct PrintCommand {
 }
 
 impl PrintCommand {
-    pub async fn run(self) -> Outcome {
+    pub async fn run(self) -> Result<(), PrintCommandRunError> {
         // let Self {
         //     path,
         // } = self;
@@ -25,3 +26,6 @@ impl PrintCommand {
         Ok(())
     }
 }
+
+#[derive(Error, Display, Debug)]
+pub enum PrintCommandRunError {}

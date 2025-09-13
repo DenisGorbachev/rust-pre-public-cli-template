@@ -1,5 +1,7 @@
-use crate::{Command, Outcome};
+use crate::{Command, CommandRunError, Outcome};
 use clap::Parser;
+use derive_more::{Error, From};
+use fmt_derive::Display;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about)]
@@ -15,8 +17,13 @@ impl Cli {
         let Self {
             command,
         } = self;
-        command.run().await
+        command.run().await.map_err(From::from)
     }
+}
+
+#[derive(Error, Display, From, Debug)]
+pub enum CliRunError {
+    CommandRunFailed { source: CommandRunError },
 }
 
 #[test]

@@ -1,13 +1,25 @@
-use crate::Outcome;
+use Command::*;
 use clap::Parser;
-use cli_util::command_enum;
+use derive_more::{Error, From};
+use fmt_derive::Display;
 
-command_enum!(
-    #[derive(Parser, Clone, Debug)]
-    pub enum Command {
-        Print(PrintCommand),
+#[derive(Parser, Clone, Debug)]
+pub enum Command {
+    Print(PrintCommand),
+}
+
+impl Command {
+    pub async fn run(self) -> Result<(), CommandRunError> {
+        match self {
+            Print(command) => command.run().await.map_err(From::from),
+        }
     }
-);
+}
+
+#[derive(Error, Display, From, Debug)]
+pub enum CommandRunError {
+    PrintCommandRunFailed { source: PrintCommandRunError },
+}
 
 mod print_command;
 
