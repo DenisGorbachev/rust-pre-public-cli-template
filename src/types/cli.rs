@@ -1,4 +1,4 @@
-use crate::{Command, CommandRunError, Outcome};
+use crate::{Command, CommandRunError};
 use clap::Parser;
 use derive_more::{Error, From};
 use fmt_derive::Display;
@@ -13,7 +13,7 @@ pub struct Cli {
 }
 
 impl Cli {
-    pub async fn run(self) -> Outcome {
+    pub async fn run(self) -> Result<(), CliRunError> {
         let Self {
             command,
         } = self;
