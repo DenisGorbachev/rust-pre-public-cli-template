@@ -1,7 +1,7 @@
 use crate::{Command, CommandRunError};
 use clap::Parser;
-use derive_more::{Error, From};
-use fmt_derive::Display;
+use errgonomic::map_err;
+use thiserror::Error;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about)]
@@ -14,15 +14,17 @@ pub struct Cli {
 
 impl Cli {
     pub async fn run(self) -> Result<(), CliRunError> {
+        use CliRunError::*;
         let Self {
             command,
         } = self;
-        command.run().await.map_err(From::from)
+        map_err!(command.run().await, CommandRunFailed)
     }
 }
 
-#[derive(Error, Display, From, Debug)]
+#[derive(Error, Debug)]
 pub enum CliRunError {
+    #[error("failed to run command")]
     CommandRunFailed { source: CommandRunError },
 }
 

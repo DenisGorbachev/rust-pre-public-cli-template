@@ -1,7 +1,7 @@
 use Command::*;
 use clap::Parser;
-use derive_more::{Error, From};
-use fmt_derive::Display;
+use errgonomic::map_err;
+use thiserror::Error;
 
 #[derive(Parser, Clone, Debug)]
 pub enum Command {
@@ -10,14 +10,16 @@ pub enum Command {
 
 impl Command {
     pub async fn run(self) -> Result<(), CommandRunError> {
+        use CommandRunError::*;
         match self {
-            Print(command) => command.run().await.map_err(From::from),
+            Print(command) => map_err!(command.run().await, PrintCommandRunFailed),
         }
     }
 }
 
-#[derive(Error, Display, From, Debug)]
+#[derive(Error, Debug)]
 pub enum CommandRunError {
+    #[error("failed to run print command")]
     PrintCommandRunFailed { source: PrintCommandRunError },
 }
 
