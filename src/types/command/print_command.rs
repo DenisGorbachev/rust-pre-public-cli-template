@@ -1,7 +1,6 @@
 use clap::{Parser, value_parser};
-use derive_more::Error;
-use fmt_derive::Display;
 use std::path::PathBuf;
+use thiserror::Error;
 
 #[derive(Parser, Clone, Debug)]
 pub struct PrintCommand {
@@ -27,5 +26,5 @@ impl PrintCommand {
     }
 }
 
-#[derive(Error, Display, Debug)]
+#[derive(Error, Debug)]
 pub enum PrintCommandRunError {}
