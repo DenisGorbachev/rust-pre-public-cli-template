@@ -1,7 +1,10 @@
-use crate::{Command, CommandRunError};
 use clap::Parser;
 use errgonomic::map_err;
 use thiserror::Error;
+
+mod command;
+
+pub use command::*;
 
 #[derive(Parser, Debug)]
 #[command(author, version, about)]
