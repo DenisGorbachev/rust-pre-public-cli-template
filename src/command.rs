@@ -1,5 +1,4 @@
 use Subcommand::*;
-use clap::Parser;
 use errgonomic::map_err;
 use thiserror::Error;
 
@@ -7,7 +6,7 @@ mod print_command;
 
 pub use print_command::*;
 
-#[derive(Parser, Debug)]
+#[derive(clap::Parser, Debug)]
 #[command(author, version, about)]
 pub struct Command {
     #[command(subcommand)]
@@ -24,7 +23,7 @@ impl Command {
     }
 }
 
-#[derive(Parser, Clone, Debug)]
+#[derive(clap::Subcommand, Clone, Debug)]
 pub enum Subcommand {
     Print(PrintCommand),
 }
