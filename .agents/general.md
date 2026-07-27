@@ -421,7 +421,6 @@ Notes:
 
 * Never use the following operators: `+, +=, -, -=, *, *=, /, /=, %, %=, -, <<, <<=, >>, >>=`
 * Never use the following traits: `core::ops::{Add, AddAssign, Sub, SubAssign, Mul, MulAssign, Div, DivAssign, Rem, RemAssign, Neg, Shl, ShlAssign, Shr, ShrAssign}`
-* Every crate must have a `#![deny(clippy::arithmetic_side_effects)]` attribute
 * Prefer `checked` versions of arithmetic operations
 * Every call to an `overflowing`, `saturating`, `wrapping` version must have a single-line comment above it that starts with "SAFETY: " and describes why calling this version is safe in this specific case
 * Use `num` crate items if necessary (for example, to implement a function that calls arithmetic methods on a generic type)
@@ -461,11 +460,3 @@ A function marked with `#[test]` or `#[tokio::test]`.
 ## Cargo.toml
 
 * Don't define package features with only a single optional dependency (such features are already defined by cargo automatically)
-
-## Sandbox
-
-You are running in a sandbox with limited network access.
-
-* The list of allowed domains is available in /etc/dnsmasq.d/allowed_domains.conf
-* If you need to run a network command, just do it without checking permissions (they will be enforced automatically)
-* If you need to read the data from other domains, use the web search tool (this tool is executed outside of sandbox)
